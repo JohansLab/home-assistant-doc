@@ -2,7 +2,7 @@
 title: "Victron Venus OS Integration"
 description: "Documentation for the Victron Venus integration"
 ha_release: "2025.2"
-ha_category: Sensor
+ha_category: Energy
 ha_iot_class: "Local Push"
 ha_config_flow: true
 ha_codeowners:
@@ -44,6 +44,25 @@ menu. It will prompt for the following information:
 
 Not that the Venus settings on the device does not allow you to configure
 a username and password via the Venus web console.
+
++{% warning %}  
++Using default empty credentials is not recommended if your device is accessible from the internet. 
++Consider implementing network isolation or firewall rules to restrict access to your local network.  
++{% endwarning %}  
+
+The connection typically fail for the following reasons:
+
+1. Device is not configured for MQTT, please see [Prerequisites]
+2. The network connection to the device is unstable (e.g. due to weak WiFi signal
+or similar). This can cause name look-up failures. For unstable connections using
+the IP address of the device can alleviate the problem.
+
+
+## Removing the integration
+
+This integration follows standard integration removal. No extra steps are required.
+
+{% include integrations/remove_device_service.md %}
 
 ## Integration Functionality
 
