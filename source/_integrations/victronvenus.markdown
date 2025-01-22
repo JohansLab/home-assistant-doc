@@ -1,7 +1,7 @@
 ---
 title: "Victron Venus OS Integration"
 description: "Documentation for the Victron Venus integration"
-ha_release: "2024.12"
+ha_release: "2025.2"
 ha_category: Sensor
 ha_iot_class: "Local Push"
 ha_config_flow: true
@@ -11,9 +11,43 @@ ha_domain: victronvenus
 
 ---
 
-The Victron Venus OS integration allows connection to a Venus Victron OS device
+The [Victron](https://www.victronenergy.com/) Venus OS integration allows connection to 
+a [Victron Venus OS device](https://www.victronenergy.com/monitoring).
  that has local MQTT enabled. This add-on will automatically configure the
   integration through UPnP/Simple Service Discovery Protocol if possible.
+
+## Installation and Configuration
+
+### Prerequisites
+
+This integration requires a Venus OS device configured to expose its MQTT interface.
+To configure it on your device the following steps can be followed:
+
+1. Open the Venus local web console. It is typically available at 
+[http://venus.local.](http://venus.local./). 
+2. Navigate to Settings > Services and activate MQTT on LAN.
+
+### Setup in Home Assistant
+
+If MQTT is enabled the installation should be picked up automatically with 
+UPnP/Simple Service Discovery Protocol. In case the device is not picked up automatically
+it can be added manually.
+
+To add the integration manually, add the integration using Home Assistant's
+menu. It will prompt for the following information:
+
+1. Host name - Default venus.local. You can also enter an IP address
+2. Port - the default MQTT port is 1883.
+3. User name - this is optional and the default is empty. 
+4. Password - this is optional and the default is empty.
+5. Use SSL - indicates whether the connection should be made via SSL.
+
+Not that the Venus settings on the device does not allow you to configure
+a username and password via the Venus web console.
+
+## Integration Functionality
+
+The integration currently only provides sensors.
 
 ### List of exposes sensors
 
@@ -48,18 +82,7 @@ These figures generally only makes sense as delta values.
 - The AC Load in watts on the inverter input.
 - The Critical Loads in watts on the inverter output.
 
-### Enabling local MQTT on a Victron Venus device
-
-If your Victron Venus device is not automatically detected ensure that MQTT on
-LAN is enabled. To enable MQTT on your device the following instructions can be
-followed (as tested on a Cerbo GX):
-
-- Connect to your device using a browser. By default the device should be
- available at [http://venus.local.](http://venus.local./).
-- In the menu navigate to Settings > Services and ensure MQTT on LAN is switched
- on.
-
-### Limitations
+## Limitations
 
 The integration currently has the following limitations:
 
@@ -70,5 +93,23 @@ configuration.
 - The integration does not currently support generators and other configuration
  options.
 - The integration currently only exposes sensors, it does not yet allow changing
-settings from Home Assistant.
-- This integration was not tested with MQTT with SSL.
+Venus OS settings from Home Assistant.
+- This integration was not tested with MQTT with SSL. 
+
+
+## Advanced Troubleshooting Options
+
+### Verify that the Venus device is visible on your network:
+
+```bash
+ping venus.local.
+```
+
+#### Verify that MQTT is working and available
+
+1. Download an application like [MQTT Explorer](http://mqtt-explorer.com/) and
+connect to your venus device.
+2. Find your serial number under the topic hierarchy e.g. "N/<serial>/system/0/Serial"
+3. Publish the number "1" to the topic "R/<serial>/keepalive"
+4. You should see various parameters of your system reflected under the "N/<serial>" 
+hierarchy.
