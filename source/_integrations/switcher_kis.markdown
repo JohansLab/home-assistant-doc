@@ -21,7 +21,6 @@ ha_platforms:
   - sensor
   - switch
 ha_config_flow: true
-ha_quality_scale: platinum
 ha_integration_type: integration
 ---
 
@@ -99,7 +98,12 @@ For Switcher power control devices (Switcher Power Plug, Switcher Touch, Switche
 | `Power Consumption` | The power consumption in watts                         | 2756 W            |
 
 *Currently not supported for Switcher Power Plug
-  
+
+For Switcher Breeze the integration provides the following sensor:
+| Sensor Name           | Description                                            | Example           |
+| --------------------- | ------------------------------------------------------ | ----------------- |
+| `Current temperature` | The current temperature in celsius                     | 25.0 °C           |
+
 ## Actions
 
 For Switcher power control devices (Switcher Touch, Switcher V2/V4) the integration provides the following sensors:
